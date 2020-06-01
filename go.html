@@ -1,0 +1,23 @@
+{% extends "master.html" %}
+{% block title %}Results{% endblock %}
+
+
+
+{% block content %}
+    <h1 class="text-center">Result</h1>
+        
+                {% if result == 1 %}
+                <label for="result">This client is likely about to FRAUD the claim
+                                    and the probability is about {{proba}} %
+                </label>
+                {% else %}
+                <label for="result">This client is not likely to FRAUD the claim 
+                                    and the probability is about {{proba}} %
+                </label>
+                {% endif %}
+         
+
+        </div>
+    </div>
+
+{% endblock %}

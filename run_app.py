@@ -21,7 +21,7 @@ def go():
     age = int(myform.getlist('age')[0])
     months = int(myform.getlist('months')[0])
     policy_deduct =int(myform.getlist('policy_deduct')[0])
-    policy_annual = int(myform.getlist('policy_annual')[0])
+    policy_annual = float(myform.getlist('policy_annual')[0])
     umbrella_limit = int(myform.getlist('umbrella_limit')[0])
     capital_gains = int(myform.getlist('capital_gains')[0])
     capital_loss = int(myform.getlist('capital_loss')[0])
@@ -198,11 +198,28 @@ def go():
     scaled_feature = scaler.transform(df)
 
     pred=model.predict(scaled_feature)
+    proba = model.predict_proba(scaled_feature)
+
+    if pred == 1:
+        prbb = round(np.max(proba*100), 2)
+        rslt = "FRAUD"
+        color = "yellow"
+            
+    else:
+        prbb = round(np.max(proba*100), 2)
+        rslt = "NOT FRAUD"
+        color = "blue"
 
     return render_template(
         'go.html',
-        result=pred
+        result=pred, res = rslt, proba = prbb, color = color
     )
+
+# Error handling
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html')
+
 
  
 if __name__ == '__main__':
